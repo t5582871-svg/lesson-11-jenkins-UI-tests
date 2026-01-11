@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class RegistrationPage {
 
 
-    private SelenideElement firstNameInput = $("#firstName"),
+    private final SelenideElement firstNameInput = $("#firstName"),
                             lastNameInput = $("#lastName"),
                             userEmailinput = $("#userEmail"),
                             userNumberInput = $("#userNumber"),
@@ -38,6 +38,11 @@ public class RegistrationPage {
         return this;
     }
 
+    public RegistrationPage removeBanner() {
+        executeJavaScript("$('footer').remove();");
+        executeJavaScript("$('#fixedban').remove();");
+        return this;
+    }
     public RegistrationPage setFirstName(String value) {
         firstNameInput.setValue(value);
         return this;
@@ -64,7 +69,7 @@ public class RegistrationPage {
     }
     public RegistrationPage setBithDay(String month, String year, String day) {
         calendarInput.click();
-        CalendarComponent.setDate(month, year, day);
+        calendarComponent.setDate(month, year, day);
         return this;
     }
     public RegistrationPage setSubjects(String value) {
