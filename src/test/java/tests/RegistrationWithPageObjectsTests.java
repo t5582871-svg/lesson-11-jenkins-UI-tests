@@ -1,11 +1,11 @@
 package tests;
 
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 
 
 public class RegistrationWithPageObjectsTests extends TestBase {
@@ -13,10 +13,15 @@ public class RegistrationWithPageObjectsTests extends TestBase {
     RegistrationPage registrationPage = new RegistrationPage();
 
     @Test
+    @DisplayName ("Полное заполнение анкеты")
     void fillFormTest() {
+        step("Открытие страницы", () ->
         registrationPage
                 .openPage()
                 .removeBanner()
+    );
+        step("Ввод данных", () ->
+        registrationPage
                 .setFirstName("Timur")
                 .setLastName("Dasaev")
                 .setEmail("email@example.ru")
@@ -32,6 +37,9 @@ public class RegistrationWithPageObjectsTests extends TestBase {
                 .setCityDropdown()
                 .setStateCity("Delhi")
                 .setSubmit()
+        );
+        step("Проверка результатов", () ->
+                registrationPage
                 .checkResult("Timur Dasaev")
                 .checkResult("email@example.ru")
                 .checkResult("Other")
@@ -41,37 +49,56 @@ public class RegistrationWithPageObjectsTests extends TestBase {
                 .checkResult("Reading")
                 .checkResult("artworks.jpg")
                 .checkResult("New York")
-                .checkResult("NCR Delhi");
+                .checkResult("NCR Delhi")
+        );
 
     }
 
     @Test
+    @DisplayName ("Мин. допустимое заполнение анкеты")
     void minFillFormTest() {
-        registrationPage
-                .openPage()
-                .removeBanner()
+        step("Открытие страницы", () ->
+                registrationPage
+                        .openPage()
+                        .removeBanner()
+        );
+        step("Ввод данных", () ->
+                registrationPage
                 .setFirstName("Timur")
                 .setLastName("Dasaev")
                 .setEmail("email@example.ru")
                 .setGender("Other")
                 .setUserNumber("8800555353")
                 .setSubmit()
+        );
+        step("Проверка результатов", () ->
+                registrationPage
                 .checkResult("Timur Dasaev")
                 .checkResult("email@example.ru")
                 .checkResult("Other")
-                .checkResult("8800555353");
+                .checkResult("8800555353")
+        );
     }
     @Test
+    @DisplayName ("Негативная проверка анкеты")
     void negativeFillFormTest() {
-        registrationPage
-                .openPage()
-                .removeBanner()
+        step("Открытие страницы", () ->
+                registrationPage
+                        .openPage()
+                        .removeBanner()
+        );
+        step("Ввод данных", () ->
+                registrationPage
                 .setFirstName("Timur")
                 .setLastName("Dasaev")
                 .setEmail("emailfhzfdhzdfh")
                 .setGender("Other")
                 .setUserNumber("8800555353")
+        );
+        step("Проверка результатов", () ->
+                registrationPage
                 .setSubmit()
-                .getModalDialog();
+                .getModalDialog()
+                );
     }
 }
