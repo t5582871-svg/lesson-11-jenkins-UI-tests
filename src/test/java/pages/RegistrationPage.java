@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import pages.components.CalendarComponent;
@@ -33,12 +34,14 @@ public class RegistrationPage {
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
+        //Selenide.executeJavaScript("var f = document.querySelector('footer'); if (f) f.remove();");
         return this;
     }
 
     public RegistrationPage removeBanner() {
-        executeJavaScript("$('footer').remove();");
-        executeJavaScript("$('#fixedban').remove();");
+        //executeJavaScript("$('footer').remove();");
+        //executeJavaScript("$('#fixedban').remove();");
+        executeJavaScript("var f = document.querySelector('footer'); if (f) f.remove();");
         return this;
     }
     public RegistrationPage setFirstName(String value) {
